@@ -1,20 +1,47 @@
 <template>
   <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 card align-items-center shadow rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
-    </div>
+    <section>
+      <img v-if="bossHealth > 0" class="oslo" src="https://em-content.zobj.net/source/twitter/348/orangutan_1f9a7.png" alt="Evil Oslo">
+      <img v-else class="oslo dead" src="https://em-content.zobj.net/source/twitter/348/orangutan_1f9a7.png" alt="Evil Oslo">
+      <h3 class="fw-bold">Evil Oslo</h3>
+      <h1>{{ bossHealth }}</h1>
+      <div class="progress">
+        <div :class="`progress-bar bg-${healthColor}`" role="progressbar" :style="`width: ${bossHealth}%;`" >
+          {{bossHealth}} {{ belowHalf }}
+        </div>
+      </div>
+      <!-- <button class="btn btn-danger" @click="killEvilOslo()" >🔪</button> -->
+      <button v-for="attack in attacks" class="btn btn-danger" @click="killEvilOslo(attack.damage)" >{{ attack.emoji }}{{attack.damage}}</button>
+
+    </section>
   </div>
 </template>
 
 <script>
+import {computed, ref} from 'vue'
 export default {
   setup() {
-    return {
-      
+// regular js + vue magic
+// const bossHealth = 100 just regular js ☹️
+const bossHealth = ref(100) // vue magic ✨
+const maxHealth = 100
+
+const belowHalf = computed(()=> bossHealth.value < 51)
+
+function killEvilOslo(damage){
+  bossHealth.value -= damage
+}
+
+const attacks = [{emoji: '🔪', damage: 5}, {emoji: '⚔️',damage: 10}, {emoji:'🔥', damage: 50}]
+
+
+return {
+  // Anything our template wants to draw / call
+  attacks,
+  bossHealth,
+  belowHalf,
+   healthColor : computed(()=> bossHealth.value < 51 ? 'warning': 'success'),
+      killEvilOslo
     }
   }
 }
@@ -40,4 +67,13 @@ export default {
     }
   }
 }
+
+.oslo{
+  filter: hue-rotate(45deg);
+}
+
+.dead{
+  transform: rotate(45deg);
+}
+
 </style>

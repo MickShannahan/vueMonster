@@ -5,10 +5,12 @@
 @import "../../../node_modules/bootstrap/scss/mixins";
 @import "../../../node_modules/bootstrap/scss/utilities";
 
+
+
 $light-theme: (
   "primary": #066ac9,
   "secondary": #071e3b,
-  "success": #0cbc87,
+  "success": #9c0cbc,
   "info": #17a2b8,
   "warning": #f7c32e,
   "danger": #d6293e,
@@ -19,7 +21,7 @@ $light-theme: (
 $dark-theme: (
   "primary": #ff22ff,
   "secondary": #2fff9a,
-  "success": #aa49f9,
+  "success": #f9f649,
   "info": #01efb6,
   "warning": #ffda6a,
   "danger": #ea868f,
